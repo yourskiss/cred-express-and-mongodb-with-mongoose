@@ -1,0 +1,34 @@
+{
+  "name": "cred-express-and-mongoose",
+  "version": "1.0.0",
+  "description": "cred opration using express and mongodb and mongoose",
+  "keywords": [
+    "mongoose",
+    "mongoose schema",
+    "mongoDB",
+    "express.js",
+    "cred",
+    "node.js"
+  ],
+  "homepage": "https://github.com/yourskiss/cred-express-and-mongoose#readme",
+  "bugs": {
+    "url": "https://github.com/yourskiss/cred-express-and-mongoose/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourskiss/cred-express-and-mongoose.git"
+  },
+  "license": "ISC",
+  "author": "K.Singh",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --env-file=.env --watch app.js",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "zod": "^4.1.8"
+  }
+}
