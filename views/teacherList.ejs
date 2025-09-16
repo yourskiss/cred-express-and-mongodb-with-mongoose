@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher List</title>
+</head>
+<body>
+<%- include('partials/header', { title: 'Teacher Management System' }) %>
+<section>
+  <h1>Teacher List</h1>
+    <% result.forEach((res) => { %>
+        <div style="border: 1px solid #ccc; padding:5px 10px ; margin-bottom: 10px; width: 100%; display: flex; justify-content: space-between;">
+            <p>
+                <strong>Full Name:</strong> <%= res.fullname %> <br> 
+                <strong>Mobile:</strong> <%= res.mobile %><br> 
+                <strong>Email:</strong> <%= res.email %><br>
+                <strong>Created At:</strong> <%= new Date(res.createdAt).toLocaleString() %><br>
+                <% if (res.createdAt.getTime() < res.updatedAt.getTime()) { %>
+                  <strong>Updated At:</strong> <%= new Date(res.updatedAt).toLocaleString() %><br>
+                <% } %>
+            </p>
+            <p>
+                <a href="/teachers/detail/<%= res.id %>">View </a>  
+                 &nbsp; ||  &nbsp; 
+                <a href="/teachers/update/<%= res.id %>">Update </a>  
+                 &nbsp; ||  &nbsp; 
+                <a href="/teachers/delete/<%= res.id %>">Delete</a> 
+                 &nbsp; 
+            </p>
+        </div>
+    <% }) %>
+</section>
+<%- include('partials/footer', { title: 'Teacher Management System' }) %>
+</body>
+</html>

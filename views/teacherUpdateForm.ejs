@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Update Teacher</title>
+</head>
+<body>
+<%- include('partials/header', { title: 'Teacher Management System' }) %>
+<section>
+  <h1>Update Teacher detail (<%= result.id %>) </h1>
+  <form action="/teachers/update-submit/<%= id %>" method="post">
+    <label>Fullname:</label>
+    <input type="text" name="fullname" value="<%= result.fullname %>" required pattern="^[A-Za-z\s]{2,25}$" />
+    <br/>
+    <label>Mobile:</label>
+    <input type="text" name="mobile" value="<%= result.mobile %>" required pattern="^[6-9]\d{9}$" />
+    <br/>
+    <label>Email:</label>
+    <input type="email" name="email" value="<%= result.email %>" required />
+    <br/>
+    <button type="submit">Update</button>
+  </form>
+</section>
+<%- include('partials/footer', { title: 'Teacher Management System' }) %>
+</body>
+</html>
