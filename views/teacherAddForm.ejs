@@ -4,9 +4,9 @@
   <title>Add Teacher</title>
 </head>
 <body>
-<%- include('partials/header', { title: 'Teacher Management System' }) %>
-<section>
-  <h1  class="mainheading">Create New Teacher</h1>
+<%- include('partials/header') %>
+<section class="sectionmin">
+  <h1  class="mainheading">Create New</h1>
   <form class="formpart" action="/teachers/add-submmit" method="post">
     <div>
         <label>Fullname:</label>
@@ -39,10 +39,18 @@
         />
     </div>
     <div>
+        <label>Password:</label>
+        <input 
+            type="text" 
+            name="password" 
+            required 
+        />
+    </div>
+    <div>
       <button type="submit">Submit</button>
     </div>
   </form>
 </section>
-<%- include('partials/footer', { title: 'Teacher Management System' }) %>
+<%- include('partials/footer', { title: 'EMP Management System' }) %>
 </body>
 </html>

@@ -4,9 +4,9 @@
   <title>Update Teacher</title>
 </head>
 <body>
-<%- include('partials/header', { title: 'Teacher Management System' }) %>
-<section>
-  <h1 class="mainheading">Update Teacher detail (<%= result.id %>) </h1>
+<%- include('partials/header') %>
+<section class="sectionmin">
+  <h1 class="mainheading">Update detail (<%= result.id %>) </h1>
   
   <form class="formpart" action="/teachers/update-submit/<%= id %>" method="post">
     <div>
@@ -47,6 +47,6 @@
     </div>
   </form>
 </section>
-<%- include('partials/footer', { title: 'Teacher Management System' }) %>
+<%- include('partials/footer', { title: 'EMP Management System' }) %>
 </body>
 </html>

@@ -1,6 +1,42 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcrypt';
 import teacherModels from '../models/teacherModels.js';
+
+
+
+export const logoutTeacher = async (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.status(500).send('Logout failed');
+    }
+    res.clearCookie('connect.sid'); // Optional: clears the session cookie
+    res.redirect('/teachers/login'); // Redirect to login page
+  });
+};
  
+export const loginTeacher = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const result = await teacherModels.findOne({ email });
+    if (!result) {
+      return res.status(401).send('Invalid email or password');
+    }
+    const isMatch = await bcrypt.compare(password, result.password);
+    if (!isMatch) {
+      return res.status(401).send('Invalid password');
+    }
+    // Save user ID in session
+    req.session.userId = result._id;
+    console.log("session id - ",req.session.userId);
+    res.redirect('/teachers/dashboard');
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
 
 export const getAllTeacher = async (req, res) => {
   try {
@@ -35,10 +71,10 @@ export const getTeacherById = async (req, res) => {
 
 
 export const createNewTeacher = async (req, res) => {
-  const { fullname, mobile, email } = req.body;
+  const { fullname, mobile, email, password } = req.body;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const mobileRegex = /^[6-9]\d{9}$/;
-  if (!fullname || !mobile || !email) {
+  if (!fullname || !mobile || !email || !password) {
     return res.status(400).json({ error: "All fields are required." });
   }
   if (!mobileRegex.test(mobile)) {
@@ -48,7 +84,9 @@ export const createNewTeacher = async (req, res) => {
     return res.status(400).json({ error: "Email format is invalid." });
   }
   try {
-    const result = await teacherModels.create(req.body);
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const data = { fullname, mobile, email, password: hashedPassword }
+    const result = await teacherModels.create(data);
     console.log("New teacher created: ", result);
    // res.status(201).json(result);
     res.redirect('/teachers');

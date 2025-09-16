@@ -5,15 +5,16 @@
 
 </head>
 <body>
-<%- include('partials/header', { title: 'Teacher Management System' }) %>
-<section>
-  <h1 class="mainheading">Teacher List</h1>
+<%- include('partials/header') %>
+<section class="sectionmin">
+  <h1 class="mainheading">All List</h1>
     <% result.forEach((res) => { %>
         <div style="border: 1px solid #ccc; padding:5px 10px ; margin-bottom: 10px; width: 100%; display: flex; justify-content: space-between;">
             <p>
                 <strong>Full Name:</strong> <%= res.fullname %> <br> 
                 <strong>Mobile:</strong> <%= res.mobile %><br> 
                 <strong>Email:</strong> <%= res.email %><br>
+                <strong>Password:</strong> <%= res.password %><br>
                 <strong>Created At:</strong> <%= new Date(res.createdAt).toLocaleString() %><br>
                 <% if (res.createdAt.getTime() < res.updatedAt.getTime()) { %>
                   <strong>Updated At:</strong> <%= new Date(res.updatedAt).toLocaleString() %><br>
@@ -29,6 +30,6 @@
         </div>
     <% }) %>
 </section>
-<%- include('partials/footer', { title: 'Teacher Management System' }) %>
+<%- include('partials/footer', { title: 'EMP Management System' }) %>
 </body>
 </html>

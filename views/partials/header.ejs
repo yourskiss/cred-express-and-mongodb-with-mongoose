@@ -8,11 +8,21 @@
 </head>
 <body>
   <header class="headerpart">
-    <h1><%= title %></h1>
+    <h1>EMP Management System</h1>
     <nav>
-      <a href="/teachers/add">Add Teacher</a> 
+      <a href="/teachers/add">Add New</a> 
        &nbsp; ||  &nbsp; 
       <a href="/teachers">View All</a>
+        &nbsp; ||  &nbsp; 
+
+      <% if (userId) { %>
+        <a href="/teachers/dashboard">Dashboard</a>
+         &nbsp; ||  &nbsp; 
+        <a href="/teachers/logout">Logout</a>
+      <% } else { %>
+        <a href="/teachers/login">Login</a>
+      <% } %>
+      
     </nav>
   </header>
 </body>

@@ -4,7 +4,8 @@ const tblSchema = new mongoose.Schema(
   {
       fullname: { type: String, required: true, trim: true },
       mobile: { type: String, required: true, unique: true },
-      email: { type: String, required: true, unique: true }
+      email: { type: String, required: true, unique: true },
+      password: { type: String, required: true, trim: true   }
   },
   { timestamps: true }
 );

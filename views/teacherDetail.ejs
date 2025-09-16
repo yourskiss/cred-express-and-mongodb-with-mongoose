@@ -4,9 +4,9 @@
   <title>Teacher List</title>
 </head>
 <body>
-<%- include('partials/header', { title: 'Teacher Management System' }) %>
-<section>
-    <h1 class="mainheading">Teacher Details (<%= result.id %>)</h1>
+<%- include('partials/header') %>
+<section class="sectionmin">
+    <h1 class="mainheading">Details (<%= result.id %>)</h1>
     <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; width: 100%; display: flex; justify-content: space-between;">
         <p>
             <strong>Full Name:</strong> <%= result.fullname %> <br>
@@ -19,6 +19,6 @@
         </p>
     </div>
 </section>
-<%- include('partials/footer', { title: 'Teacher Management System' }) %>
+<%- include('partials/footer', { title: 'EMP Management System' }) %>
 </body>
 </html>
