@@ -18,7 +18,8 @@ app.use(express.json());
 connectDB();
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  // res.send("Hello World");
+  res.redirect('/teachers');
 });
 
 app.use("/teachers",teacherRoutes);
