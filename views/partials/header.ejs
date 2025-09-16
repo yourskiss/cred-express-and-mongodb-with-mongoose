@@ -4,15 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <title>Teacher App</title>
- 
+   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header style="background-color: blueviolet; width: 100%; padding: 20px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center;">
-    <h1 style="text-align: center; color: #fff; font-size:30px; "><%= title %></h1>
-    <nav  style="color: #fff; font-size:16px; ">
-      <a  style="color: #fff; " href="/teachers/add">Add Teacher</a> 
+  <header class="headerpart">
+    <h1><%= title %></h1>
+    <nav>
+      <a href="/teachers/add">Add Teacher</a> 
        &nbsp; ||  &nbsp; 
-      <a  style="color: #fff;" href="/teachers">View All</a>
+      <a href="/teachers">View All</a>
     </nav>
   </header>
 </body>

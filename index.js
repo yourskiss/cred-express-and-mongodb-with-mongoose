@@ -5,6 +5,9 @@ import { PORT } from "./config/env.js";
 import connectDB from "./config/db.js";
 import { teacherRoutes } from "./routes/teacherRoutes.js";
 
+
+app.use(express.static("public"));
+
 // ejs
 app.set('view engine', 'ejs');
 

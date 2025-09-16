@@ -18,7 +18,7 @@ router.post('/add-submmit', createNewTeacher);
 router.get('/', getAllTeacher);
 router.get('/detail/:id', getTeacherById);
 
-router.delete('/delete/:id', deleteTeacher);
+router.post('/delete/:id', deleteTeacher);
 
 router.get("/update/:id", getTeacherUpdate);
 router.post("/update-submit/:id", updateTeacher);

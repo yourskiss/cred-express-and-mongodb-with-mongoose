@@ -94,6 +94,7 @@ export const updateTeacher = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!updated) return res.status(404).send("Teacher not Updated");
+    console.log("teacher updated: ", updated);
     res.redirect('/teachers');
   } catch (err) {
     if (err.code === 11000) {
@@ -109,8 +110,11 @@ export const deleteTeacher = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'Invalid Teacher id' });
   try {
-    await teacherModels.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Teacher deleted successfully' });
+    const deleted = await teacherModels.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).send("Teacher not deleted");
+   // res.status(200).json({ message: 'Teacher deleted successfully' });
+   console.log("teacher deleted: ", deleted);
+    res.redirect('/teachers');
   } catch (error) {
     console.error('Error deleting Teacher :', error.message);
     res.status(500).json({ error: 'Internal Server Error' });

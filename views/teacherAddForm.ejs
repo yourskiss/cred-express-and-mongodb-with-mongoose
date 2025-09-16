@@ -6,36 +6,41 @@
 <body>
 <%- include('partials/header', { title: 'Teacher Management System' }) %>
 <section>
-  <h1>Create New Teacher</h1>
-  <form action="/teachers/add-submmit" method="post">
-    <label>Fullname:</label>
-    <input 
-        type="text" 
-        name="fullname" 
-        required 
-        pattern="^[A-Za-z\s]{2,25}$" 
-        title="Name should be 2-25 letters only."
-    />
-    <br/>
-    <label>Mobile:</label>
-    <input 
-        type="text" 
-        name="mobile" 
-        required
-        pattern="^[6-9]\d{9}$" 
-        title="Enter a valid 10-digit Indian mobile number starting with 6-9."
-    />
-    <br/>
-    <label>Email:</label>
-    <input 
-        type="email" 
-        name="email" 
-        required 
-        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-        title="Enter a valid email address."
-    />
-    <br/>
-    <button type="submit">Submit</button>
+  <h1  class="mainheading">Create New Teacher</h1>
+  <form class="formpart" action="/teachers/add-submmit" method="post">
+    <div>
+        <label>Fullname:</label>
+        <input 
+            type="text" 
+            name="fullname" 
+            required 
+            pattern="^[A-Za-z\s]{2,25}$" 
+            title="Name should be 2-25 letters only."
+        />
+    </div>
+    <div>
+        <label>Mobile:</label>
+        <input 
+            type="text" 
+            name="mobile" 
+            required
+            pattern="^[6-9]\d{9}$" 
+            title="Enter a valid 10-digit Indian mobile number starting with 6-9."
+        />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input 
+            type="email" 
+            name="email" 
+            required 
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+            title="Enter a valid email address."
+        />
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
   </form>
 </section>
 <%- include('partials/footer', { title: 'Teacher Management System' }) %>
