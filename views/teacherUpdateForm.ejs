@@ -6,18 +6,18 @@
 <body>
 <%- include('partials/header') %>
 <section class="sectionmin">
-  <h1 class="mainheading">Update detail (<%= result.id %>) </h1>
+  <h1 class="mainheading">Update detail (<%= id %>) </h1>
   
-  <form class="formpart" action="/teachers/update-submit/<%= id %>" method="post">
+  <form class="formpart" action="/teachers/update/<%= id %>" method="post">
+    <% if (error) { %>
+      <aside><%= error %></aside>
+    <% } %>
     <div>
         <label>Fullname:</label>
         <input 
             type="text" 
             name="fullname" 
-             value="<%= result.fullname %>"
-            required 
-            pattern="^[A-Za-z\s]{2,25}$" 
-            title="Name should be 2-25 letters only."
+             value="<%= result.fullname || '' %>"
         />
     </div>
     <div>
@@ -25,21 +25,15 @@
         <input 
             type="text" 
             name="mobile" 
-            value="<%= result.mobile %>"
-            required
-            pattern="^[6-9]\d{9}$" 
-            title="Enter a valid 10-digit Indian mobile number starting with 6-9."
+            value="<%= result.mobile || '' %>"
         />
     </div>
     <div>
         <label>Email:</label>
         <input 
-            type="email" 
+            type="text" 
             name="email" 
-            value="<%= result.email %>"
-            required 
-            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-            title="Enter a valid email address."
+            value="<%= result.email || '' %>"
         />
     </div>
     <div>

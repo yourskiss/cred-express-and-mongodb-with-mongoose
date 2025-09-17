@@ -6,6 +6,8 @@ import { PORT } from "./config/env.js";
 import connectDB from "./config/db.js";
 import { teacherRoutes } from "./routes/teacherRoutes.js";
 
+// Connect to Databse
+connectDB();
 
 // genrate session
 app.use(session({
@@ -20,14 +22,12 @@ app.use(express.static("public"));
 // ejs
 app.set('view engine', 'ejs');
 
-// form submissions
+// allows it to parse URL-encoded form data
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware
+// Middleware - Parse incoming JSON
 app.use(express.json());
 
-// Connect to MongoDB
-connectDB();
 
 
 // get user session id value
@@ -44,6 +44,8 @@ app.get("/", (req, res) => {
 
 app.use("/teachers",teacherRoutes);
 
+
+// run to the server on the port
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

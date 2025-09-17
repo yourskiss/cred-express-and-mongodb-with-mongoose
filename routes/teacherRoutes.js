@@ -3,37 +3,32 @@ const router = express.Router();
 import { isAuthenticated } from '../middlewares/authMiddleware.js';
 import {
     createNewTeacher,
+    createTearcherForm,
     getAllTeacher,
     getTeacherById,
-
     deleteTeacher,
-
-    getTeacherUpdate, updateTeacher,
-    loginTeacher, logoutTeacher
+    getTeacherUpdate, 
+    updateTeacher,
+    loginForm,
+    loginTeacher,
+    logoutTeacher
 } from '../controllers/teacherControllers.js';
 
-router.get('/add', (req, res) => {
-  res.render('teacherAddForm');  
-});
-router.post('/add-submmit', createNewTeacher);
+// public routes
+router.get('/login', loginForm);
+router.post('/login', loginTeacher);
+router.get('/add', createTearcherForm);
+router.post('/add', createNewTeacher);
+router.get("/update/:id", getTeacherUpdate);
+router.post("/update/:id", updateTeacher);
+router.post('/delete/:id', deleteTeacher);
 router.get('/', getAllTeacher);
 router.get('/detail/:id', getTeacherById);
-
-router.post('/delete/:id', deleteTeacher);
-
-router.get("/update/:id", getTeacherUpdate);
-router.post("/update-submit/:id", updateTeacher);
-
-
-router.get('/login', (req, res) => {
-  res.render('teacherLogin');
-});
-router.post('/signin', loginTeacher);
-
 router.get('/logout', logoutTeacher);
 
+
+// protected route
 router.get('/dashboard', isAuthenticated, (req, res) => {
- // res.send(`Dashboard, user ID: ${req.session.userId}`);
   res.render('teacherDashboard', { userSessionId: req.session.userId });
 });
  

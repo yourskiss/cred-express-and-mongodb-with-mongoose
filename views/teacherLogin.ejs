@@ -7,15 +7,17 @@
 <%- include('partials/header') %>
 <section class="sectionmin">
   <h1  class="mainheading">Login</h1>
-  <form class="formpart" action="/teachers/signin" method="post">
+ 
+  <form class="formpart" action="/teachers/login" method="post">
+    <% if (error) { %>
+      <aside><%= error %></aside>
+    <% } %>
     <div>
         <label>Email:</label>
         <input 
-            type="email" 
+            type="test" 
             name="email" 
-            required 
-            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-            title="Enter a valid email address."
+            value="<%= email || '' %>"
         />
     </div>
         <div>
@@ -23,7 +25,6 @@
         <input 
             type="text" 
             name="password" 
-            required
         />
     </div>
     <div>

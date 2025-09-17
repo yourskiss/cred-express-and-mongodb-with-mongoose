@@ -8,6 +8,26 @@
 <%- include('partials/header') %>
 <section class="sectionmin">
   <h1 class="mainheading">All List</h1>
+  <% if (error) { %>
+      <h6 class="mainError"><%= error %></h6>
+  <% } else {  %>
+
+<div class="sortcontrols">
+  <% 
+    const secondary = sortBy === 'mobile'; 
+    const primary = sortBy === 'fullname';
+  %>
+  <p>
+    <b>Sort by:</b>
+    <a href="?sortBy=mobile&order=<%= secondary && order === 1 ? 'desc' : 'asc' %>" class="<%= secondary ? 'active' : '' %>">
+      Mobile <%= secondary ? (order === 1 ? '▲' : '▼') : '' %>
+    </a>
+    <a href="?sortBy=fullname&order=<%= primary && order === 1 ? 'desc' : 'asc' %>" class="<%= primary ? 'active' : '' %>">
+      Name <%= primary ? (order === 1 ? '▲' : '▼') : '' %>
+    </a>
+  </p>
+</div>
+
     <% result.forEach((res) => { %>
         <div style="border: 1px solid #ccc; padding:5px 10px ; margin-bottom: 10px; width: 100%; display: flex; justify-content: space-between;">
             <p>
@@ -16,7 +36,10 @@
                 <strong>Email:</strong> <%= res.email %><br>
                 <strong>Password:</strong> <%= res.password %><br>
                 <strong>Created At:</strong> <%= new Date(res.createdAt).toLocaleString() %><br>
-                <% if (res.createdAt.getTime() < res.updatedAt.getTime()) { %>
+                <% 
+                const createdDate = new Date(res.createdAt);
+                const updatedDate = new Date(res.updatedAt);
+                if (createdDate.getTime() < updatedDate.getTime()) { %>
                   <strong>Updated At:</strong> <%= new Date(res.updatedAt).toLocaleString() %><br>
                 <% } %>
             </p>
@@ -29,6 +52,30 @@
             </div>
         </div>
     <% }) %>
+
+<div class="pagingcontrols">
+  <% if (currentPage > 1) { %>
+    <a href="?page=<%= currentPage - 1 %>&sortBy=<%= sortBy %>&order=<%= order === 1 ? 'asc' : 'desc' %>">Previous</a>
+  <% } %>
+
+  <% for (let i = 1; i <= totalPages; i++) { %>
+    <% if (i === currentPage) { %>
+      <b><%= i %></b>
+    <% } else { %>
+      <a href="?page=<%= i %>&sortBy=<%= sortBy %>&order=<%= order === 1 ? 'asc' : 'desc' %>"><%= i %></a>
+    <% } %>
+  <% } %>
+
+  <% if (currentPage < totalPages) { %>
+    <a href="?page=<%= currentPage + 1 %>&sortBy=<%= sortBy %>&order=<%= order === 1 ? 'asc' : 'desc' %>">Next</a>
+  <% } %>
+</div>
+
+
+
+
+
+    <% } %>
 </section>
 <%- include('partials/footer', { title: 'EMP Management System' }) %>
 </body>
