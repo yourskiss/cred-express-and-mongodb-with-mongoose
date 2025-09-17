@@ -12,6 +12,10 @@
     <% if (error) { %>
       <aside><%= error %></aside>
     <% } %>
+    <h4 class="backtolist">
+      <a href="/teachers/<%= querydata %>">Back to List</a>
+    </h4>
+    <input type="hidden" name="querydata" value="<%= querydata %>">
     <div>
         <label>Fullname:</label>
         <input 

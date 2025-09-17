@@ -10,6 +10,9 @@
     <% if (error) { %>
       <h6 class="mainError"><%= error %></h6>
     <% } else { %>
+    <h4 class="backtolist">
+      <a href="/teachers/<%= querydata %>">Back to List</a>
+    </h4>
     <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; width: 100%; display: flex; justify-content: space-between;">
         <p>
             <strong>Full Name:</strong> <%= result.fullname %> <br>

@@ -1,10 +1,6 @@
-
 <h3>
-  This project is built using <strong>Express.js</strong> (hosted on <strong>Render.com</strong>), <strong>MongoDB Atlas</strong>, and <strong>Mongoose</strong>.<br />
-  It follows the <strong>MVC</strong> (Model-View-Controller) architectural pattern and supports basic <strong>CRUD</strong> operations to manage student records efficiently.<br />
- Authentication is handled via email and password, and route protection is enforced using session-based access control (UserSessionID).
+  This web application is built using Express.js, MongoDB Atlas, and Mongoose, and follows the MVC (Model-View-Controller) architectural pattern. It provides a streamlined interface for managing records with full CRUD functionality, secure authentication, and protected routing.
 </h3>
- 
 
 <h3>Features</h3>
 <ul>
@@ -13,11 +9,17 @@
   <li><strong>Delete User</strong> – Remove a User record</li>
   <li><strong>View All User</strong> – Display a list of all students</li>
   <li><strong>View User by ID</strong> – Show detailed information of a User using their ID</li>
-  <li><strong>Login</strong> – Authenticate users using email and password</li>
-  <li><strong>Protected routes</strong> – Secure routes using session validation</li>
+  <li><strong>Login</strong> – Authenticate users securely</li>
+  <li><strong>Protected routes</strong> – Ensure only logged-in users can access sensitive pages</li>
 </ul>
  
- 
+<h3>Authentication & Security</h3>
+<ul>
+  <li>Login via Email & Password</li>
+  <li>Session-based Access Control using UserSessionID</li>
+  <li>Protected Routes to restrict unauthorized access</li>
+</ul>
+
 <h3>Tech Stack</h3>
 <ul>
   <li><strong>Express.js</strong> – Web framework for building backend logic with Node.js</li>

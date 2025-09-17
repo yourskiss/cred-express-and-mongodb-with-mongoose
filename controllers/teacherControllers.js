@@ -89,10 +89,10 @@ export const getAllTeacher1 = async (req, res) => {
 */
 export const getAllTeacher = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // current page number
-  const limit = 2; // teachers per page
+  const limit = 1; // teachers per page
   const skip = (page - 1) * limit;
   
-  const sortBy = req.query.sortBy || 'fullname'; // default field
+  const sortBy = req.query.sortBy || 'createdAt'; // default field
   const order = req.query.order === 'desc' ? -1 : 1; // default A-Z
   const sortOptions = {};
   sortOptions[sortBy] = order;
@@ -138,19 +138,21 @@ export const getAllTeacher = async (req, res) => {
 
 export const getTeacherById = async (req, res) => {
   const { id } = req.params;
+  const { page, sortBy, order } = req.query;
+  const querydata = `?page=${page}&sortBy=${sortBy}&order=${order}`;
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).render('teacherDetail', { error: 'Invalid Teacher id', result: '' });
+    return res.status(400).render('teacherDetail', { error: 'Invalid Teacher id', result: '', querydata });
   }
   try {
     const result = await teacherModels.findById(id);
     if (!result) {
-      return res.status(404).render('teacherDetail', { error: 'Teacher not found', result: '' });
+      return res.status(404).render('teacherDetail', { error: 'Teacher not found', result: '', querydata });
     } 
     console.log("Teacher by id - ",result);
-    res.render("teacherDetail", { error:null, result:result });
+    res.render("teacherDetail", { error:null, result:result, querydata });
   } catch (error) {
     console.error('Error fetching Teacher by id:', error.message);
-    res.status(500).render('teacherDetail', { error: 'Internal Server Error', result: '' });
+    res.status(500).render('teacherDetail', { error: 'Internal Server Error', result: '', querydata });
   }
 };
 
@@ -220,39 +222,43 @@ export const createNewTeacher = async (req, res) => {
 
 export const getTeacherUpdate = async (req, res) => {
   const { id } = req.params;
+  const { page, sortBy, order } = req.query;
+  const querydata = `?page=${page}&sortBy=${sortBy}&order=${order}`;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     // return res.status(404).json({ message: 'Invalid Teacher id' });
-    return res.render("teacherUpdateForm", { error:'Invalid Teacher id', id, result:'' });
+    return res.render("teacherUpdateForm", { error:'Invalid Teacher id', id, result:'', querydata });
   }
   try {
     const result = await teacherModels.findById(id);
     if (!result) {
      // return res.status(404).send("Teacher not found");
-      return res.render("teacherUpdateForm", { error: 'Teacher not found', id, result:'' });
+      return res.render("teacherUpdateForm", { error: 'Teacher not found', id, result:'', querydata });
     } 
-    return res.render("teacherUpdateForm", { error: null, id, result:result });
+    return res.render("teacherUpdateForm", { error: null, id, result:result, querydata });
   } catch (err) {
   // return res.status(500).send("Server error");
-   return res.status(500).render("teacherUpdateForm", { error: 'Internal Server Error', id, result:'' });
+   return res.status(500).render("teacherUpdateForm", { error: 'Internal Server Error', id, result:'', querydata });
   }
 };
 export const updateTeacher = async (req, res) => {
-  const { fullname, email, mobile } = req.body;
+  const { querydata, fullname, email, mobile } = req.body;
   const { id } = req.params;
   const data = { fullname, email, mobile };
+ 
   const mobileRegex = /^[6-9]\d{9}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!fullname || !email || !mobile) {
    // return res.status(400).send("All fields are required");
-    return res.status(400).render("teacherUpdateForm", { error: 'All fields are required', id, result:data });
+    return res.status(400).render("teacherUpdateForm", { error: 'All fields are required', id, result:data, querydata });
   }
   if (!mobileRegex.test(mobile)) {
     // return res.status(400).send("Invalid mobile number");
-    return res.status(400).render("teacherUpdateForm", { error: 'Invalid mobile number', id, result:data });
+    return res.status(400).render("teacherUpdateForm", { error: 'Invalid mobile number', id, result:data, querydata });
   }
   if (!emailRegex.test(email)) {
    // return res.status(400).send("Invalid email format");
-    return res.status(400).render("teacherUpdateForm", { error: 'Invalid email format', id, result:data });
+    return res.status(400).render("teacherUpdateForm", { error: 'Invalid email format', id, result:data, querydata });
   }
   try {
     const updated = await teacherModels.findByIdAndUpdate(
@@ -262,34 +268,60 @@ export const updateTeacher = async (req, res) => {
     );
     if (!updated)  {
       // res.status(404).send("Teacher not Updated");
-      return res.status(404).render("teacherUpdateForm", { error: 'Teacher not Updated', id, result:data });
+      return res.status(404).render("teacherUpdateForm", { error: 'Teacher not Updated', id, result:data, querydata });
     }
 
     console.log("teacher updated: ", updated);
-    res.redirect('/teachers');
+    res.redirect(`/teachers/${querydata}`);
   } catch (err) {
     if (err.code === 11000) {
       const field = Object.keys(err.keyPattern)[0];
      // return res.status(409).send();
-      return res.status(500).render("teacherUpdateForm", { error:`${field} already exists`, id, result:data });
+      return res.status(500).render("teacherUpdateForm", { error:`${field} already exists`, id, result:data, querydata });
     }
     // res.status(500).send("Server error");
-    return res.status(500).render("teacherUpdateForm", { error: 'Internal Server Error.', id, result:data });
+    return res.status(500).render("teacherUpdateForm", { error: 'Internal Server Error.', id, result:data, querydata });
   }
 };
 
 
 export const deleteTeacher = async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'Invalid Teacher id' });
+  let page = parseInt(req.body.page) || 1;  
+  let sortBy = req.body.sortBy || 'createdAt';
+  let order = req.body.order || 'asc';
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: 'Invalid Teacher ID' });
+  }
+
   try {
     const deleted = await teacherModels.findByIdAndDelete(id);
-    if (!deleted) return res.status(404).send("Teacher not deleted");
-   // res.status(200).json({ message: 'Teacher deleted successfully' });
-   console.log("teacher deleted: ", deleted);
-    res.redirect('/teachers');
+    if (!deleted) {
+      return res.status(404).send("Teacher not deleted");
+    }
+    const limit = 5;  // or whatever you're using
+
+    // Check how many items are left
+    const remainingCount = await teacherModels.countDocuments();
+    const totalPages = Math.ceil(remainingCount / limit);
+
+    // 🔁 If current page is now too high, go back one page
+    if (page > totalPages && totalPages > 0) {
+      page = totalPages;
+    }
+
+    // 🔁 If no records exist, go to page 1
+    if (totalPages === 0) {
+      page = 1;
+    }
+
+    const redirectQuery = `?page=${page}&sortBy=${sortBy}&order=${order}`;
+    res.redirect(`/teachers/${redirectQuery}`);
+    
+    console.log("Teacher deleted:", deleted);
   } catch (error) {
-    console.error('Error deleting Teacher :', error.message);
+    console.error('Error deleting Teacher:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

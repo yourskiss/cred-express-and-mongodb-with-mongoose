@@ -21,6 +21,7 @@ router.get('/add', createTearcherForm);
 router.post('/add', createNewTeacher);
 router.get("/update/:id", getTeacherUpdate);
 router.post("/update/:id", updateTeacher);
+// router.get('/delete/:id', deleteTeacher);
 router.post('/delete/:id', deleteTeacher);
 router.get('/', getAllTeacher);
 router.get('/detail/:id', getTeacherById);
