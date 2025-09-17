@@ -89,7 +89,7 @@ export const getAllTeacher1 = async (req, res) => {
 */
 export const getAllTeacher = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // current page number
-  const limit = 1; // teachers per page
+  const limit = process.env.RECORD_LIMIT; 
   const skip = (page - 1) * limit;
   
   const sortBy = req.query.sortBy || 'createdAt'; // default field
@@ -290,35 +290,21 @@ export const deleteTeacher = async (req, res) => {
   let page = parseInt(req.body.page) || 1;  
   let sortBy = req.body.sortBy || 'createdAt';
   let order = req.body.order || 'asc';
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: 'Invalid Teacher ID' });
   }
-
   try {
     const deleted = await teacherModels.findByIdAndDelete(id);
     if (!deleted) {
       return res.status(404).send("Teacher not deleted");
     }
-    const limit = 5;  // or whatever you're using
-
-    // Check how many items are left
+    const limit = process.env.RECORD_LIMIT;  
     const remainingCount = await teacherModels.countDocuments();
     const totalPages = Math.ceil(remainingCount / limit);
-
-    // 🔁 If current page is now too high, go back one page
-    if (page > totalPages && totalPages > 0) {
-      page = totalPages;
-    }
-
-    // 🔁 If no records exist, go to page 1
-    if (totalPages === 0) {
-      page = 1;
-    }
-
+    if (page > totalPages && totalPages > 0) { page = totalPages;}
+    if (totalPages === 0) { page = 1;}
     const redirectQuery = `?page=${page}&sortBy=${sortBy}&order=${order}`;
     res.redirect(`/teachers/${redirectQuery}`);
-    
     console.log("Teacher deleted:", deleted);
   } catch (error) {
     console.error('Error deleting Teacher:', error.message);

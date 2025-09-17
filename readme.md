@@ -11,6 +11,7 @@
   <li><strong>View User by ID</strong> – Show detailed information of a User using their ID</li>
   <li><strong>Login</strong> – Authenticate users securely</li>
   <li><strong>Protected routes</strong> – Ensure only logged-in users can access sensitive pages</li>
+  <li><strong>Pagination</strong> – Add Paging functionality in User record page</li>
 </ul>
  
 <h3>Authentication & Security</h3>
