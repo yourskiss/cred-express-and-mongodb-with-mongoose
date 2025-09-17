@@ -9,14 +9,22 @@
   <h1  class="mainheading">Create New</h1>
   <form class="formpart" action="/teachers/add" method="post">
     <% if (error) { %>
-      <aside><%= error %></aside>
+      <aside class="errormessage"><%= error %></aside>
+    <% } %>
+    <% if (success) { %>
+      <aside class="successmessage"><%= success %></aside>
+      <script>
+        setTimeout(() => {
+          window.location.href = '/teachers';
+        }, 2000); 
+      </script>
     <% } %>
     <div>
         <label>Fullname:</label>
         <input 
             type="text" 
             name="fullname" 
-            value="<%= fullname || '' %>"
+            value="<%= data.fullname || '' %>"
         />
     </div>
     <div>
@@ -24,7 +32,7 @@
         <input 
             type="text" 
             name="mobile" 
-            value="<%= mobile || '' %>"
+            value="<%= data.mobile || '' %>"
 
         />
     </div>
@@ -33,7 +41,7 @@
         <input 
             type="test" 
             name="email" 
-            value="<%= email || '' %>"
+            value="<%= data.email || '' %>"
         />
     </div>
     <div>

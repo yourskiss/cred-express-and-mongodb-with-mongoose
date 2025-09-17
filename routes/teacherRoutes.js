@@ -2,33 +2,37 @@ import express from 'express';
 const router = express.Router();
 import { isAuthenticated } from '../middlewares/authMiddleware.js';
 import {
-    createNewTeacher,
-    createTearcherForm,
-    getAllTeacher,
-    getTeacherById,
-    deleteTeacher,
-    getTeacherUpdate, 
-    updateTeacher,
-    loginForm,
-    loginTeacher,
-    logoutTeacher
+    renderAdd, 
+    handleAdd,
+    renderUpdate, 
+    handleUpdate,
+    getAll,
+    getById,
+    handleDelete,
+    handleLogout,
+    renderLogin, 
+    handleLogin, 
+    renderChangePassword, 
+    handleChangePassword
 } from '../controllers/teacherControllers.js';
 
 // public routes
-router.get('/login', loginForm);
-router.post('/login', loginTeacher);
-router.get('/add', createTearcherForm);
-router.post('/add', createNewTeacher);
-router.get("/update/:id", getTeacherUpdate);
-router.post("/update/:id", updateTeacher);
-// router.get('/delete/:id', deleteTeacher);
-router.post('/delete/:id', deleteTeacher);
-router.get('/', getAllTeacher);
-router.get('/detail/:id', getTeacherById);
-router.get('/logout', logoutTeacher);
+router.get('/login', renderLogin);
+router.post('/login', handleLogin);
+router.get('/add', renderAdd);
+router.post('/add', handleAdd);
+router.get("/update/:id", renderUpdate);
+router.post("/update/:id", handleUpdate);
+// router.get('/delete/:id', handleDelete);
+router.post('/delete/:id', handleDelete);
+router.get('/', getAll);
+router.get('/detail/:id', getById);
+router.get('/logout', handleLogout);
 
 
 // protected route
+router.get('/change-password', isAuthenticated, renderChangePassword);
+router.post('/change-password', isAuthenticated, handleChangePassword);
 router.get('/dashboard', isAuthenticated, (req, res) => {
   res.render('teacherDashboard', { userSessionId: req.session.userId });
 });

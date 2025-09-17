@@ -9,12 +9,21 @@
   <h1 class="mainheading">Update detail (<%= id %>) </h1>
   
   <form class="formpart" action="/teachers/update/<%= id %>" method="post">
-    <% if (error) { %>
-      <aside><%= error %></aside>
-    <% } %>
     <h4 class="backtolist">
       <a href="/teachers/<%= querydata %>">Back to List</a>
     </h4>
+    <% if (error) { %>
+      <aside class="errormessage"><%= error %></aside>
+    <% } %>
+    <% if (success) { %>
+      <aside class="successmessage"><%= success %></aside>
+      <script>
+        setTimeout(() => {
+          window.location.href = "/teachers/<%= querydata %>";
+        }, 2000); 
+      </script>
+    <% } %>
+    
     <input type="hidden" name="querydata" value="<%= querydata %>">
     <div>
         <label>Fullname:</label>

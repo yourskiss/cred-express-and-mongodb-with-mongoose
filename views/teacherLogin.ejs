@@ -10,7 +10,15 @@
  
   <form class="formpart" action="/teachers/login" method="post">
     <% if (error) { %>
-      <aside><%= error %></aside>
+      <aside class="errormessage"><%= error %></aside>
+    <% } %>
+    <% if (success) { %>
+      <aside class="successmessage"><%= success %></aside>
+      <script>
+        setTimeout(() => {
+          window.location.href = "/teachers/dashboard";
+        }, 2000); 
+      </script>
     <% } %>
     <div>
         <label>Email:</label>
